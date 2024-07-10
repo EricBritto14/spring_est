@@ -38,12 +38,21 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<Object> getOneProduct(@PathVariable(value="id") UUID id){
+    public ResponseEntity<Object> getProductById(@PathVariable(value="id") UUID id){
         Optional<ProductModel> productO = productRepository.findById(id); //Linha do objeto para procurar o produto pelo id no banco de dados
         if(productO.isEmpty()){ //if para verificar se está vazio
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado");
         }
         return ResponseEntity.status(HttpStatus.OK).body(productO.get());
+    }
+
+    @GetMapping("/products/produto_name/{nome}")
+    public ResponseEntity<Object> getProductByName(@RequestParam(value="name") String name){
+        Optional<ProductModel> produtoByName = productRepository.findByName(name);
+        if(produtoByName.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto de nome {} não encontrado");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(produtoByName.get());
     }
 
     @PutMapping("/products/{id}")

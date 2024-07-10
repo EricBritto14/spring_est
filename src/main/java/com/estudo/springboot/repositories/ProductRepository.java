@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 //Spring tem 4 arrobas necessários saber, para saber como será o tratamento do Bean de acordo com o service.
 // @Component, quando temos uma classe mais genérica podemos utilizar o @Component para mostrar pro Bean que vai ser gerenciado por ele
@@ -14,5 +15,5 @@ import java.util.UUID;
 
 @Repository //Este @Repository não é 100% necessário pois embaixo já puxamos o JpaRepository, assim o spring já entende que aqui vai tratar dados, mas por boa prática e mais facil entendimento, é bom deixar!
 public interface ProductRepository extends JpaRepository<ProductModel, UUID> {   //Importando a JPARepository para facilitar e dar acesso a tudo necessário, e dentro dela passando a classe Model que vamos trabalhar, e o identificador, no caso o UUID
-
+        Optional<ProductModel> findByName(String name);
 }
